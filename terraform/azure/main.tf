@@ -140,7 +140,7 @@ resource "azurerm_public_ip" "lb" {
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     allocation_method   = "Dynamic"
-    domain_name_label   = "staticsite-lb-kb"
+    domain_name_label   = "staticsite-lb-002"
 }
 
 resource "azurerm_lb" "lb" {
