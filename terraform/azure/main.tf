@@ -52,7 +52,7 @@ resource "azurerm_network_interface" "vm01" {
 
 resource "azurerm_network_interface" "vm02" {
     name                = "vm02"
-    location            = "brazilsouth"
+    location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
         name                          = "vm02"
@@ -140,7 +140,7 @@ resource "azurerm_public_ip" "lb" {
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     allocation_method   = "Dynamic"
-    domain_name_label   = "staticsite-lb-002"
+    domain_name_label   = "staticsite-lb-bassokl"
 }
 
 resource "azurerm_lb" "lb" {
