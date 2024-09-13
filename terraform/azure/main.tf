@@ -1,3 +1,8 @@
+resource "azurerm_resource_group" "rg" {
+    name     = "rg-staticsite-lb"
+    location = "brazilsouth"
+}
+
 resource "azurerm_virtual_network" "vnet" {
     name                = "vnet"
     location            = azurerm_resource_group.rg.location
