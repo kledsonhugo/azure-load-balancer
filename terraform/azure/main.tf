@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "rg" {
-    name     = "rg-staticsite-lb"
-    location = "brazilsouth"
-}
-
 resource "azurerm_virtual_network" "vnet" {
     name                = "vnet"
     location            = azurerm_resource_group.rg.location
@@ -140,7 +135,7 @@ resource "azurerm_public_ip" "lb" {
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     allocation_method   = "Static"
-    domain_name_label   = "staticsite-lb-bassokl"
+    domain_name_label   = "staticsitelbtf0001"
 }
 
 resource "azurerm_lb" "lb" {
