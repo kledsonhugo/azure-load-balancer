@@ -39,8 +39,8 @@ resource "azurerm_subnet_network_security_group_association" "nsg" {
     network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_network_interface" "vm01" {
-    name                = "vm01"
+resource "azurerm_network_interface" "vm01-nic" {
+    name                = "vm01-nic"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
@@ -50,8 +50,8 @@ resource "azurerm_network_interface" "vm01" {
     }
 }
 
-resource "azurerm_network_interface" "vm02" {
-    name                = "vm02"
+resource "azurerm_network_interface" "vm02-nic" {
+    name                = "vm02-nic"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
     ip_configuration {
@@ -75,7 +75,7 @@ resource "azurerm_virtual_machine" "vm01" {
     name                             = "vm01"
     location                         = azurerm_resource_group.rg.location
     resource_group_name              = azurerm_resource_group.rg.name
-    network_interface_ids            = [azurerm_network_interface.vm01.id]
+    network_interface_ids            = [azurerm_network_interface.vm01-nic.id]
     availability_set_id              = azurerm_availability_set.vm.id
     vm_size                          = "Standard_DS1_v2"
     delete_os_disk_on_termination    = true
@@ -87,7 +87,7 @@ resource "azurerm_virtual_machine" "vm01" {
         version   = "latest"
     }
     storage_os_disk {
-        name              = "vm01"
+        name              = "vm01-os-disk"
         caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Standard_LRS"
@@ -107,7 +107,7 @@ resource "azurerm_virtual_machine" "vm02" {
     name                             = "vm02"
     location                         = azurerm_resource_group.rg.location
     resource_group_name              = azurerm_resource_group.rg.name
-    network_interface_ids            = [azurerm_network_interface.vm02.id]
+    network_interface_ids            = [azurerm_network_interface.vm02-nic.id]
     availability_set_id              = azurerm_availability_set.vm.id
     vm_size                          = "Standard_DS1_v2"
     delete_os_disk_on_termination    = true
@@ -119,7 +119,7 @@ resource "azurerm_virtual_machine" "vm02" {
         version   = "latest"
     }
     storage_os_disk {
-        name              = "vm02"
+        name              = "vm02-os-disk"
         caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Standard_LRS"
@@ -170,13 +170,13 @@ resource "azurerm_lb_rule" "lb" {
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm01" {
     ip_configuration_name   = "vm01"
-    network_interface_id    = azurerm_network_interface.vm01.id
+    network_interface_id    = azurerm_network_interface.vm01-nic.id
     backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm02" {
     ip_configuration_name   = "vm02"
-    network_interface_id    = azurerm_network_interface.vm02.id
+    network_interface_id    = azurerm_network_interface.vm02-nic.id
     backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
 }
 
@@ -184,7 +184,7 @@ resource "azurerm_virtual_machine" "vm03" {
     name                  = "vm03"
     location              = azurerm_resource_group.rg.location
     resource_group_name   = azurerm_resource_group.rg.name
-    network_interface_ids = [azurerm_network_interface.vm03.id]
+    network_interface_ids = [azurerm_network_interface.vm03-nic.id]
     vm_size               = "Standard_DS1_v2"
 
     delete_os_disk_on_termination    = true
@@ -219,7 +219,7 @@ resource "azurerm_virtual_machine" "vm04" {
     name                  = "vm04"
     location              = azurerm_resource_group.rg.location
     resource_group_name   = azurerm_resource_group.rg.name
-    network_interface_ids = [azurerm_network_interface.vm04.id]
+    network_interface_ids = [azurerm_network_interface.vm04-nic.id]
     vm_size               = "Standard_DS1_v2"
 
     delete_os_disk_on_termination    = true
@@ -250,7 +250,7 @@ resource "azurerm_virtual_machine" "vm04" {
     }
 }
 
-resource "azurerm_network_interface" "vm03" {
+resource "azurerm_network_interface" "vm03-nic" {
     name                = "vm03-nic"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
@@ -262,7 +262,7 @@ resource "azurerm_network_interface" "vm03" {
     }
 }
 
-resource "azurerm_network_interface" "vm04" {
+resource "azurerm_network_interface" "vm04-nic" {
     name                = "vm04-nic"
     location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
@@ -276,12 +276,12 @@ resource "azurerm_network_interface" "vm04" {
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm03" {
     ip_configuration_name   = "internal"
-    network_interface_id    = azurerm_network_interface.vm03.id
+    network_interface_id    = azurerm_network_interface.vm03-nic.id
     backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm04" {
     ip_configuration_name   = "internal"
-    network_interface_id    = azurerm_network_interface.vm04.id
+    network_interface_id    = azurerm_network_interface.vm04-nic.id
     backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
 }
