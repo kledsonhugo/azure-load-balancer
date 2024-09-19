@@ -7,4 +7,4 @@ echo "Install Apache"
 sudo apt install apache2 -y
 
 echo "Install application"
-echo "staticsite-lb-azure" > /var/www/html/index.html
+echo "Bem vindos ao TDC São Paulo 2024" > /var/www/html/index.html
