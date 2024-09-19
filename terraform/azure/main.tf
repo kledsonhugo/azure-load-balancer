@@ -257,7 +257,7 @@ resource "azurerm_network_interface" "vm03" {
 
     ip_configuration {
         name                          = "internal"
-        subnet_id                     = azurerm_subnet.vnet.id
+        subnet_id                     = azurerm_subnet.subnet.id
         private_ip_address_allocation = "Dynamic"
     }
 }

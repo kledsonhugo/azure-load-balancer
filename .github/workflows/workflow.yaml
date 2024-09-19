@@ -15,7 +15,7 @@ env:
 jobs:
 
   CI-test:
-    name: CI Test
+    name: Test
     runs-on: ubuntu-latest
     steps:
     - uses: hashicorp/setup-terraform@v3
@@ -27,7 +27,8 @@ jobs:
     - run : terraform -chdir=./terraform/azure validate
 
   CD-deploy:
-    name: CD Deployment
+    name: Deploy
+    needs: CI-test
     runs-on: ubuntu-latest
     steps:
     - uses: hashicorp/setup-terraform@v3
