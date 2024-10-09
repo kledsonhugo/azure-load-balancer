@@ -21,3 +21,8 @@ provider "azurerm" {
     }
   }
 }
+
+resource "azurerm_resource_group" "rg" {
+    name     = "rg-staticsite-lb-aluno01"
+    location = "brazilsouth"
+}
