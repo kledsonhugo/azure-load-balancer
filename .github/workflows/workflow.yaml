@@ -6,7 +6,7 @@ on:
     - main
 
 env:
-  TERRAFORM_VERSION  : 1.9.7
+  TERRAFORM_VERSION  : 1.9.8
   ARM_CLIENT_ID      : ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET  : ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
