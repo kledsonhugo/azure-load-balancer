@@ -174,3 +174,15 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm02" {
     network_interface_id    = azurerm_network_interface.vm02-nic.id
     backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
 }
+
+resource "azurerm_lb_nat_pool" "lb" {
+    name            = "HTTP"
+    resource_group_name = azurerm_resource_group.rg.name
+    location        = azurerm_resource_group.rg.location
+    loadbalancer_id = azurerm_lb.lb.id
+    frontend_ip_configuration_name = "lb"
+    protocol        = "Tcp"
+    frontend_port_range_start = 80
+    frontend_port_range_end   = 80
+    backend_port              = 80
+}
