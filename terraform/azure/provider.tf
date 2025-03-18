@@ -2,12 +2,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 4.4.0"
+      version = ">= 4.23.0"
     }
   }
   backend "azurerm" {
-    resource_group_name  = "rg-staticsite-lb-tf-aluno02"
-    storage_account_name = "staticsitelbtfaluno02"
+    resource_group_name  = "rg-standard-003-tf"
+    storage_account_name = "staticsitelbtf"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
@@ -23,6 +23,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "rg-staticsite-lb-aluno02"
+    name     = "rg-standard-003"
     location = "brazilsouth"
 }
