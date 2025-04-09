@@ -38,16 +38,6 @@ jobs:
     - run : terraform -chdir=./terraform/azure plan -out tfplan
     - run : terraform -chdir=./terraform/azure apply tfplan
     - run : terraform -chdir=./terraform/azure show
-    - name: Obter a URL da aplicação
-      id: get-url
+    - name: Mostrar URL da aplicação
       run: |
-        echo "::set-output name=app-url::$(terraform -chdir=./terraform/azure output -raw lb_fqdn)"
-        echo "APP_URL=$(terraform -chdir=./terraform/azure output -raw lb_fqdn)" >> $GITHUB_ENV
-    - name: Adicionar link ao summary
-      run: |
-        echo "🔗 [Acesse sua aplicação aqui]($APP_URL)" >> $GITHUB_STEP_SUMMARY
-    - name: Mostrar link
-      run: |
-        echo "🔗 [Acesse sua aplicação aqui](${{ needs.CD-deploy.outputs.app-url }})" >> $GITHUB_STEP_SUMMARY
-
-    
+        echo "APP_URL=$(terraform -chdir=./terraform/azure output -raw lb_fqdn)"
