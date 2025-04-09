@@ -35,7 +35,15 @@ jobs:
         terraform_version: $TERRAFORM_VERSION
     - uses: actions/checkout@v4
     - run : terraform -chdir=./terraform/azure init
-    - run : terraform -chdir=./terraform/azure plan -destroy -out tfplan
+    - run : terraform -chdir=./terraform/azure plan -out tfplan
     - run : terraform -chdir=./terraform/azure apply tfplan
     - run : terraform -chdir=./terraform/azure show
+    - name: Obter a URL da aplicação
+      id: get-url
+      run: |
+        echo "APP_URL=$(terraform output -raw lb_fqdn)" >> $GITHUB_ENV
+    - name: Adicionar link ao summary
+      run: |
+        echo "🔗 [Acesse sua aplicação aqui]($APP_URL)" >> $GITHUB_STEP_SUMMARY
+
     
