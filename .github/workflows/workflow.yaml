@@ -41,7 +41,7 @@ jobs:
     - name: Obter a URL da aplicação
       id: get-url
       run: |
-        echo "APP_URL=$(terraform output -raw lb_fqdn)" >> $GITHUB_ENV
+        echo "APP_URL=$(terraform -chdir=./terraform/azure output -raw lb_fqdn)" >> $GITHUB_ENV
     - name: Adicionar link ao summary
       run: |
         echo "🔗 [Acesse sua aplicação aqui]($APP_URL)" >> $GITHUB_STEP_SUMMARY
