@@ -24,5 +24,5 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
     name     = "rg-appstaticsitelb"
-    location = "brazilsouth"
+    location = "eastus2"
 }
