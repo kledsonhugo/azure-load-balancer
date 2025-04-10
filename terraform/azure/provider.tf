@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = "rg-standard-app-tf"
-    storage_account_name = "standardapptf"
+    resource_group_name  = "rg-appstaticsitelbtf"
+    storage_account_name = "appstaticsitelb"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
@@ -23,6 +23,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "rg-standard-app"
+    name     = "rg-appstaticsitelb"
     location = "brazilsouth"
 }
