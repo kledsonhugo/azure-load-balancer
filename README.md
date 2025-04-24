@@ -1,2 +1,1 @@
 # staticsite-lb-azure
-
