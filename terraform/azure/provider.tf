@@ -23,6 +23,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    name     = "rg-appstaticsitelb"
-    location = "eastus2"
+  name     = "rg-appstaticsitelb"
+  location = "eastus2"
 }
