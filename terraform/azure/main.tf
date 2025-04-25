@@ -108,8 +108,8 @@ resource "azurerm_virtual_machine" "vm01" {
   delete_data_disks_on_termination = true
   storage_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
     version   = "latest"
   }
   storage_os_disk {
