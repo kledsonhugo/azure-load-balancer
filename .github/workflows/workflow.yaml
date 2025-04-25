@@ -44,6 +44,3 @@ jobs:
       run : terraform -chdir=./terraform/azure apply tfplan
     - name: Terraform Show
       run : terraform -chdir=./terraform/azure show
-    - name: Load Balancer url
-      run: |
-        echo "LB_URL=$(terraform -chdir=./terraform/azure output -raw lb_fqdn)"
