@@ -28,17 +28,6 @@ resource "azurerm_network_security_group" "nsg" {
     destination_address_prefix = "*"
   }
   security_rule {
-    name                       = "HTTPS"
-    priority                   = 1002
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-  security_rule {
     name                       = "SSH"
     priority                   = 1003
     direction                  = "Inbound"
@@ -76,16 +65,25 @@ resource "azurerm_network_interface" "vm01-nic" {
   }
 }
 
-# resource "azurerm_network_interface" "vm02-nic" {
-#   name                = "vm02-nic"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-#   ip_configuration {
-#     name                          = "vm02"
-#     subnet_id                     = azurerm_subnet.subnet.id
-#     private_ip_address_allocation = "Dynamic"
-#   }
-# }
+resource "azurerm_public_ip" "vm02" {
+  name                = "vm02-ip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Dynamic"
+  sku                 = "Standard"
+}
+
+resource "azurerm_network_interface" "vm02-nic" {
+  name                = "vm02-nic"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  ip_configuration {
+    name                          = "vm02"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.vm02.id
+  }
+}
 
 data "template_file" "cloud_init" {
   template = file("./scripts/cloud_init.sh")
@@ -129,37 +127,37 @@ resource "azurerm_virtual_machine" "vm01" {
   }
 }
 
-# resource "azurerm_virtual_machine" "vm02" {
-#   name                             = "vm02"
-#   location                         = azurerm_resource_group.rg.location
-#   resource_group_name              = azurerm_resource_group.rg.name
-#   network_interface_ids            = [azurerm_network_interface.vm02-nic.id]
-#   availability_set_id              = azurerm_availability_set.vm.id
-#   vm_size                          = "Standard_D2s_v3"
-#   delete_os_disk_on_termination    = true
-#   delete_data_disks_on_termination = true
-#   storage_image_reference {
-#     publisher = "Canonical"
-#     offer     = "0001-com-ubuntu-server-jammy"
-#     sku       = "22_04-lts"
-#     version   = "latest"
-#   }
-#   storage_os_disk {
-#     name              = "vm02-os-disk"
-#     caching           = "ReadWrite"
-#     create_option     = "FromImage"
-#     managed_disk_type = "Standard_LRS"
-#   }
-#   os_profile {
-#     computer_name  = "vm02"
-#     admin_username = "vmuser"
-#     admin_password = "Password1234!"
-#     custom_data    = base64encode(data.template_file.cloud_init.rendered)
-#   }
-#   os_profile_linux_config {
-#     disable_password_authentication = false
-#   }
-# }
+resource "azurerm_virtual_machine" "vm02" {
+  name                             = "vm02"
+  location                         = azurerm_resource_group.rg.location
+  resource_group_name              = azurerm_resource_group.rg.name
+  network_interface_ids            = [azurerm_network_interface.vm02-nic.id]
+  availability_set_id              = azurerm_availability_set.vm.id
+  vm_size                          = "Standard_D2s_v3"
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
+    version   = "latest"
+  }
+  storage_os_disk {
+    name              = "vm02-os-disk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+  os_profile {
+    computer_name  = "vm02"
+    admin_username = "vmuser"
+    admin_password = "Password1234!"
+    custom_data    = base64encode(data.template_file.cloud_init.rendered)
+  }
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+}
 
 # resource "azurerm_public_ip" "lb" {
 #   name                = "lb"
