@@ -15,7 +15,7 @@ body:
     attributes:
       label: Passos para reproduzir
       description: "Como reproduzir o erro"
-      placeholder: "1. Vá para... 2. Clique em..."
+      placeholder: "1. Vá para a página inicial. 2. Clique no botão 'Login'. 3. Insira credenciais inválidas. 4. Observe a mensagem de erro exibida."
     validations:
       required: true
 
