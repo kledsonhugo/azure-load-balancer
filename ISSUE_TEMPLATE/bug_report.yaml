@@ -1,5 +1,5 @@
 name: Bug Report
-description: Reportar um problema no sistema
+description: Reporte um erro ou comportamento inesperado
 title: "[BUG] "
 labels: [bug]
 assignees: []
@@ -8,40 +8,27 @@ body:
   - type: markdown
     attributes:
       value: |
-        Obrigado por contribuir! Por favor, preencha as informações abaixo para nos ajudar a reproduzir e corrigir o problema.
-
-  - type: input
-    id: sistema
-    attributes:
-      label: Em qual sistema ocorreu?
-      placeholder: "Ex: dashboard-admin, api-auth..."
-    validations:
-      required: true
+        Obrigado por contribuir! Preencha as informações abaixo. Para mais orientações, consulte nosso guia de contribuição: [Guia de Contribuição](https://example.com/contributing).
 
   - type: textarea
     id: steps
     attributes:
       label: Passos para reproduzir
-      description: "Liste passo a passo como reproduzir o problema"
+      description: "Como reproduzir o erro"
+      placeholder: "1. Vá para a página inicial. 2. Clique no botão 'Login'. 3. Insira credenciais inválidas. 4. Observe a mensagem de erro exibida."
     validations:
       required: true
 
   - type: textarea
     id: expected
     attributes:
-      label: Resultado esperado
+      label: Comportamento esperado
     validations:
       required: true
 
   - type: textarea
     id: actual
     attributes:
-      label: Resultado atual
+      label: Comportamento atual
     validations:
       required: true
-
-  - type: textarea
-    id: context
-    attributes:
-      label: Contexto adicional
-      description: Inclua capturas de tela, links, logs, etc.
