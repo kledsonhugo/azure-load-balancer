@@ -24,7 +24,7 @@ Este repositório gerencia a infraestrutura de uma aplicação estática no Azur
 
 2. **Configure o Ambiente**:
 
-   Certifique-se de ter o Terraform instalado na versão especificada no pipeline (1.11.3).
+   Certifique-se de ter o Terraform instalado na versão especificada no pipeline (1.11.3). Versões posteriores podem ser compatíveis, mas não foram testadas e não são garantidas.
    Configure as credenciais do Azure como variáveis de ambiente:
 
    ```bash
