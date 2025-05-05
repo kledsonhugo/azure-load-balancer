@@ -59,3 +59,7 @@ Este repositório gerencia a infraestrutura de uma aplicação estática no Azur
 - Adicionar testes automatizados para validar a infraestrutura.
 
 Contribuições são bem-vindas! Siga as instruções acima para colaborar.
+
+## Colaborações
+
+- Minha primeira contribuição com um projeto Open Source.
