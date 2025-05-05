@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Obrigado por contribuir! Preencha as informações abaixo.
+        Obrigado por contribuir! Preencha as informações abaixo. Para mais orientações, consulte nosso guia de contribuição: [Guia de Contribuição](https://example.com/contributing).
 
   - type: textarea
     id: steps
