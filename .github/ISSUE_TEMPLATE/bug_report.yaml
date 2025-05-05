@@ -1,0 +1,34 @@
+name: Bug Report
+description: Reporte um erro ou comportamento inesperado
+title: "[BUG] "
+labels: [bug]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por contribuir! Preencha as informações abaixo.
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      description: "Como reproduzir o erro"
+      placeholder: "1. Vá para... 2. Clique em..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamento esperado
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamento atual
+    validations:
+      required: true
