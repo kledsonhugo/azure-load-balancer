@@ -62,4 +62,5 @@ Contribuições são bem-vindas! Siga as instruções acima para colaborar.
 
 ## Colaborações
 
-- Minha primeira contribuição com um projeto Open Source.
+- Este projeto é aberto a contribuições de todos. Se você deseja colaborar, siga as instruções na seção "Como Contribuir" acima.
+- Agradecemos todas as contribuições, desde melhorias na documentação até a implementação de novos recursos.
