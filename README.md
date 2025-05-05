@@ -54,7 +54,7 @@ Este repositório gerencia a infraestrutura de uma aplicação estática no Azur
 
 ## Melhorias Futuras
 
-- Implementar um Load Balancer para distribuir o tráfego entre as máquinas virtuais.
+- Implementar um Load Balancer para distribuir o tráfego entre as máquinas virtuais. Um Load Balancer ajuda a distribuir o tráfego de rede de forma equilibrada entre várias máquinas virtuais, aumentando a disponibilidade e a resiliência da aplicação. Consulte a [documentação oficial do Azure Load Balancer](https://learn.microsoft.com/azure/load-balancer/load-balancer-overview) para mais informações sobre como configurá-lo.
 - Configurar outputs no Terraform para expor informações úteis, como o endereço IP público das VMs.
 - Adicionar testes automatizados para validar a infraestrutura.
 
