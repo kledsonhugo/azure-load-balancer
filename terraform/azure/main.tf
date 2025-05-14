@@ -192,6 +192,7 @@ resource "azurerm_lb_rule" "lb" {
   backend_port                   = 80
   frontend_ip_configuration_name = "lb"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb.id]
+  load_distribution              = "Default"
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm01" {
