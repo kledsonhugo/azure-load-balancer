@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - main
+    - develop
 
 env:
   TERRAFORM_VERSION  : 1.11.3
@@ -29,6 +30,7 @@ jobs:
     name: Deploy
     needs: CI-test
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: Terraform Setup
       uses: hashicorp/setup-terraform@v3
