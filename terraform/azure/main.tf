@@ -184,6 +184,16 @@ resource "azurerm_lb_backend_address_pool" "lb" {
   loadbalancer_id = azurerm_lb.lb.id
 }
 
+resource "azurerm_lb_probe" "http" {
+  name                = "http-probe"
+  resource_group_name = azurerm_resource_group.rg.name
+  loadbalancer_id     = azurerm_lb.lb.id
+  protocol            = "Tcp"
+  port                = 80
+  interval_in_seconds = 5
+  number_of_probes    = 2
+}
+
 resource "azurerm_lb_rule" "lb" {
   name                           = "HTTP"
   loadbalancer_id                = azurerm_lb.lb.id
@@ -192,6 +202,7 @@ resource "azurerm_lb_rule" "lb" {
   backend_port                   = 80
   frontend_ip_configuration_name = "lb"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb.id]
+  probe_id                       = azurerm_lb_probe.http.id
   load_distribution              = "Default"
 }
 
