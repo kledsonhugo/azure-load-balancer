@@ -7,7 +7,7 @@ on:
     - develop
 
 env:
-  TERRAFORM_VERSION  : 1.11.3
+  TERRAFORM_VERSION  : 1.11.4
   ARM_CLIENT_ID      : ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET  : ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
