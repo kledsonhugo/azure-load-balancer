@@ -1,6 +1,13 @@
 # Example Terraform variables file
 # Copy this file to terraform.tfvars and set your values
 
+# RECOMMENDED: Use Azure Key Vault for secure password storage
+# Uncomment and configure these variables to use an external Key Vault:
+# key_vault_name                = "your-keyvault-name"
+# key_vault_resource_group_name = "your-keyvault-resource-group"
+# key_vault_secret_name         = "vm-admin-password"
+
+# ALTERNATIVE: Direct password (for development/testing only)
 # Admin password for virtual machines (minimum 8 characters)
 # This password will be used for both vm01 and vm02
 # admin_password = "YourSecurePassword123!"

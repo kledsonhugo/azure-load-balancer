@@ -1,3 +1,27 @@
+# Data source for Key Vault (if using external Key Vault)
+data "azurerm_key_vault" "external" {
+  count               = var.key_vault_name != null ? 1 : 0
+  name                = var.key_vault_name
+  resource_group_name = var.key_vault_resource_group_name
+}
+
+# Data source for Key Vault secret containing admin password
+data "azurerm_key_vault_secret" "admin_password" {
+  count        = var.key_vault_name != null ? 1 : 0
+  name         = var.key_vault_secret_name
+  key_vault_id = data.azurerm_key_vault.external[0].id
+}
+
+# Local value to determine admin password source
+locals {
+  admin_password = var.key_vault_name != null ? data.azurerm_key_vault_secret.admin_password[0].value : var.admin_password
+}
+
+# Validation to ensure either Key Vault or direct password is provided
+locals {
+  validation_check = var.key_vault_name != null || var.admin_password != null ? true : tobool("Either key_vault_name or admin_password must be provided")
+}
+
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet"
   location            = azurerm_resource_group.rg.location
@@ -126,7 +150,7 @@ resource "azurerm_virtual_machine" "vm01" {
   os_profile {
     computer_name  = "vm01"
     admin_username = "vmuser"
-    admin_password = var.admin_password
+    admin_password = local.admin_password
     custom_data    = base64encode(data.template_file.cloud_init.rendered)
   }
   os_profile_linux_config {
@@ -158,7 +182,7 @@ resource "azurerm_virtual_machine" "vm02" {
   os_profile {
     computer_name  = "vm02"
     admin_username = "vmuser"
-    admin_password = var.admin_password
+    admin_password = local.admin_password
     custom_data    = base64encode(data.template_file.cloud_init.rendered)
   }
   os_profile_linux_config {
