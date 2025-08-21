@@ -158,7 +158,7 @@ resource "azurerm_virtual_machine" "vm02" {
   os_profile {
     computer_name  = "vm02"
     admin_username = "vmuser"
-    admin_password = "Password1234!"
+    admin_password = var.admin_password
     custom_data    = base64encode(data.template_file.cloud_init.rendered)
   }
   os_profile_linux_config {
