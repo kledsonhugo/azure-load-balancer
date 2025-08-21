@@ -7,7 +7,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "rg-appstaticsitelbtf"
-    storage_account_name = "appstaticsitelb"
+    storage_account_name = "azureloadbalancertf"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
