@@ -1,0 +1,4 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and set your own secure password
+
+# admin_password = "YourSecurePassword123!"
