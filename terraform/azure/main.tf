@@ -1,28 +1,26 @@
+resource "azurerm_resource_group" "rg-lb" {
+  name     = "rg-lb"
+  location = "brazilsouth"
+}
+
 resource "azurerm_virtual_network" "vnet" {
   name                = "vnet"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   address_space       = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "subnet" {
   name                 = "subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg-lb.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource "azurerm_subnet" "appgw_subnet" {
-  name                 = "appgw-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.2.0/24"]
-}
-
 resource "azurerm_network_security_group" "nsg" {
   name                = "nsg"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   security_rule {
     name                       = "HTTP"
     priority                   = 1010
@@ -54,16 +52,16 @@ resource "azurerm_subnet_network_security_group_association" "nsg" {
 
 resource "azurerm_public_ip" "vm01" {
   name                = "vm01-ip"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "vm01-nic" {
   name                = "vm01-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   ip_configuration {
     name                          = "vm01"
     subnet_id                     = azurerm_subnet.subnet.id
@@ -74,16 +72,16 @@ resource "azurerm_network_interface" "vm01-nic" {
 
 resource "azurerm_public_ip" "vm02" {
   name                = "vm02-ip"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "vm02-nic" {
   name                = "vm02-nic"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   ip_configuration {
     name                          = "vm02"
     subnet_id                     = azurerm_subnet.subnet.id
@@ -98,14 +96,14 @@ data "template_file" "cloud_init" {
 
 resource "azurerm_availability_set" "vm" {
   name                = "vm"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
 }
 
 resource "azurerm_virtual_machine" "vm01" {
   name                             = "vm01"
-  location                         = azurerm_resource_group.rg.location
-  resource_group_name              = azurerm_resource_group.rg.name
+  location                         = azurerm_resource_group.rg-lb.location
+  resource_group_name              = azurerm_resource_group.rg-lb.name
   network_interface_ids            = [azurerm_network_interface.vm01-nic.id]
   availability_set_id              = azurerm_availability_set.vm.id
   vm_size                          = "Standard_D2s_v3"
@@ -136,8 +134,8 @@ resource "azurerm_virtual_machine" "vm01" {
 
 resource "azurerm_virtual_machine" "vm02" {
   name                             = "vm02"
-  location                         = azurerm_resource_group.rg.location
-  resource_group_name              = azurerm_resource_group.rg.name
+  location                         = azurerm_resource_group.rg-lb.location
+  resource_group_name              = azurerm_resource_group.rg-lb.name
   network_interface_ids            = [azurerm_network_interface.vm02-nic.id]
   availability_set_id              = azurerm_availability_set.vm.id
   vm_size                          = "Standard_D2s_v3"
@@ -168,17 +166,17 @@ resource "azurerm_virtual_machine" "vm02" {
 
 resource "azurerm_public_ip" "lb" {
   name                = "lb"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   allocation_method   = "Static"
-  domain_name_label   = "azureloadbalancer001"
+  domain_name_label   = var.domain_name_label
   sku                 = "Standard"
 }
 
 resource "azurerm_lb" "lb" {
   name                = "lb"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg-lb.location
+  resource_group_name = azurerm_resource_group.rg-lb.name
   sku                 = "Standard"
   frontend_ip_configuration {
     name                 = "lb"
