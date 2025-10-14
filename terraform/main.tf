@@ -192,9 +192,8 @@ resource "azurerm_lb_backend_address_pool" "lb" {
 resource "azurerm_lb_probe" "http" {
   name                = "http-probe"
   loadbalancer_id     = azurerm_lb.lb.id
-  protocol            = "Http"
+  protocol            = "Tcp"
   port                = 80
-  request_path        = "/"
   interval_in_seconds = 15
   number_of_probes    = 2
 }
