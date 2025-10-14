@@ -201,7 +201,7 @@ resource "azurerm_lb_probe" "http" {
 resource "azurerm_lb_rule" "lb" {
   name                           = "HTTP-RoundRobin"
   loadbalancer_id                = azurerm_lb.lb.id
-  protocol                       = "Http"
+  protocol                       = "Tcp"
   frontend_port                  = 80
   backend_port                   = 80
   frontend_ip_configuration_name = "lb"
