@@ -184,10 +184,15 @@ resource "azurerm_lb" "lb" {
   }
 }
 
-resource "azurerm_lb_backend_address_pool" "lb" {
-  name            = "lb"
+resource "azurerm_lb_backend_address_pool" "lb-a" {
+  name            = "lb-a"
   loadbalancer_id = azurerm_lb.lb.id
 }
+resource "azurerm_lb_backend_address_pool" "lb-b" {
+  name            = "lb-b"
+  loadbalancer_id = azurerm_lb.lb.id
+}
+
 
 resource "azurerm_lb_probe" "http" {
   name                = "http-probe"
@@ -205,7 +210,7 @@ resource "azurerm_lb_rule" "lb" {
   frontend_port                  = 80
   backend_port                   = 80
   frontend_ip_configuration_name = "lb"
-  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb.id]
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb-a.id, azurerm_lb_backend_address_pool.lb-b.id]
   probe_id                       = azurerm_lb_probe.http.id
   load_distribution              = "Default"
 }
@@ -213,11 +218,11 @@ resource "azurerm_lb_rule" "lb" {
 resource "azurerm_network_interface_backend_address_pool_association" "vm01" {
   ip_configuration_name   = "vm01"
   network_interface_id    = azurerm_network_interface.vm01-nic.id
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lb-a.id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm02" {
   ip_configuration_name   = "vm02"
   network_interface_id    = azurerm_network_interface.vm02-nic.id
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lb-b.id
 }
